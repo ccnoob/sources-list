@@ -1,0 +1,121 @@
+#!/bin/sh
+exec tail -n +3 $0
+# This file provides an easy way to add custom menu entries.  Simply type the
+# menu entries you want to add after this comment.  Be careful not to change
+# the 'exec tail' line above.
+
+submenu "Windows PE 启动合集-电脑万能维护 >>" {
+	menuentry "[磁盘分区启动] Mobile WINDOWS PE" {
+		set root=(hd0,1)
+	    	chainloader /EFI/Boot/weipe.efi
+	}
+	menuentry "[UUID启动] Mobile WINDOWS PE" {
+		search --no-floppy --fs-uuid --set=root F84A-C1E5
+	    	chainloader /EFI/Boot/weipe.efi
+	}
+}
+
+submenu "[UBUNTU-ISO]黑客初级测试系统集合 >>"{
+	menuentry "[搜索iso启动执行] [Ubuntu]Ubuntu18.04 ISO" {
+	        search.file /iso/ubuntu-18.04.3-desktop-amd64.iso root
+	        loopback loop0 /iso/ubuntu-18.04.3-desktop-amd64.iso
+	        linux (loop0)/casper/vmlinuz ro boot=casper iso-scan/filename=/iso/ubuntu-18.04.3-desktop-amd64.iso ro noeject noprompt splash locale=zh_CN.UTF-8 --
+	        initrd (loop0)/casper/initrd
+	}
+	menuentry "[搜索iso启动执行] [XFCE]Xubuntu18.04 ISO" {
+	        search.file /iso/xubuntu-18.04.2-desktop-amd64.iso root
+	        loopback loop0 /iso/xubuntu-18.04.2-desktop-amd64.iso
+	        linux (loop0)/casper/vmlinuz ro boot=casper iso-scan/filename=/iso/xubuntu-18.04.2-desktop-amd64.iso ro noeject noprompt splash locale=zh_CN.UTF-8 --
+	        initrd (loop0)/casper/initrd
+	}
+	menuentry "[搜索iso启动执行] [LXDE]Lubuntu18.04 ISO" {
+	        search.file /iso/lubuntu-18.04-desktop-amd64.iso root
+	        loopback loop0 /iso/lubuntu-18.04-desktop-amd64.iso
+	        linux (loop0)/casper/vmlinuz ro boot=casper iso-scan/filename=/iso/lubuntu-18.04-desktop-amd64.iso ro noeject noprompt splash locale=zh_CN.UTF-8 --
+	        initrd (loop0)/casper/initrd.lz
+	}
+	menuentry "[搜索iso启动执行] [KDE]Kubuntu18.04 ISO" {
+	        search.file /iso/kubuntu-18.04.2-desktop-amd64.iso root
+	        loopback loop0 /iso/kubuntu-18.04.2-desktop-amd64.iso
+	        linux (loop0)/casper/vmlinuz ro boot=casper iso-scan/filename=/iso/kubuntu-18.04.2-desktop-amd64.iso ro noeject noprompt splash locale=zh_CN.UTF-8 --
+	        initrd (loop0)/casper/initrd
+	}
+	menuentry "[搜索iso启动执行] ElementaryOS-5.0 ISO" {
+	        search.file /iso/elementaryos-5.0-stable.20181016.iso root
+	        loopback loop0 /iso/elementaryos-5.0-stable.20181016.iso
+	        linux (loop0)/casper/vmlinuz ro boot=casper iso-scan/filename=/iso/elementaryos-5.0-stable.20181016.iso ro noeject noprompt splash locale=zh_CN.UTF-8 --
+	        initrd (loop0)/casper/initrd.lz
+	}
+}
+
+submenu "黑客中级靶场靶机集合 >>" {
+	menuentry 'Install CentOS 7' --class fedora --class gnu-linux --class gnu --class os {
+		search.file /iso/CentOS7.iso root
+	    	loopback loop0 /iso/CentOS7.iso
+		linuxefi (loop0)/images/pxeboot/vmlinuz inst.stage2=hd:LABEL=CentOS\x207\x20x86_64 quiet
+		initrdefi (loop0)/images/pxeboot/initrd.img
+	}
+	menuentry 'Test this media & install CentOS 7' --class fedora --class gnu-linux --class gnu --class os {
+		search.file /iso/CentOS7.iso root
+	    	loopback loop0 /iso/CentOS7.iso
+		linuxefi (loop0)/images/pxeboot/vmlinuz inst.stage2=hd:LABEL=CentOS\x207\x20x86_64 rd.live.check quiet
+		initrdefi (loop0)/images/pxeboot/initrd.img
+	}
+	menuentry 'Install CentOS 7 in basic graphics mode' --class fedora --class gnu-linux --class gnu --class os {
+		search.file /iso/CentOS7.iso root
+	    	loopback loop0 /iso/CentOS7.iso
+		linuxefi (loop0)/images/pxeboot/vmlinuz inst.stage2=hd:LABEL=CentOS\x207\x20x86_64 xdriver=vesa nomodeset quiet
+		initrdefi (loop0)/images/pxeboot/initrd.img
+	}
+	menuentry 'Rescue a CentOS system' --class fedora --class gnu-linux --class gnu --class os {
+		search.file /iso/CentOS7.iso root
+	    	loopback loop0 /iso/CentOS7.iso
+		linuxefi (loop0)/images/pxeboot/vmlinuz inst.stage2=hd:LABEL=CentOS\x207\x20x86_64 rescue quiet
+		initrdefi (loop0)/images/pxeboot/initrd.img
+	}
+}
+
+submenu "黑客高级靶场靶机集合 >>" {
+	menuentry --hotkey=g 'Graphical install' {
+		search.file /iso/debian-9.8.0-amd64-DVD-1.iso root
+	    	loopback loop0 /iso/debian-9.8.0-amd64-DVD-1.iso
+	        set background_color=black
+	        linux    (loop0)/install.amd/vmlinuz vga=788 --- quiet 
+	        initrd   (loop0)/install.amd/gtk/initrd.gz
+	}
+	menuentry --hotkey=i 'Install' {
+		search.file /iso/debian-9.8.0-amd64-DVD-1.iso root
+	    	loopback loop0 /iso/debian-9.8.0-amd64-DVD-1.iso
+	        set background_color=black
+	        linux    (loop0)/install.amd/vmlinuz vga=788 --- quiet 
+	        initrd   (loop0)/install.amd/initrd.gz
+	}
+}
+
+submenu "真实银行测试系统 >>" {
+
+	search.file /iso/elementaryos-5.0-stable.20181016.iso root
+        loopback loop0 /iso/elementaryos-5.0-stable.20181016.iso
+
+        menuentry "Try elementary OS without installing" {
+        	set gfxpayload=keep
+		linux	(loop0)/casper/vmlinuz   file=/cdrom/preseed/ubuntu.seed boot=casper iso-scan/filename=/iso/elementaryos-5.0-stable.20181016.iso quiet splash ---
+		initrd	(loop0)/casper/initrd.lz		
+	}
+
+        menuentry "Install elementary OS" {
+		linux	(loop0)/casper/vmlinuz  file=/cdrom/preseed/ubuntu.seed boot=casper only-ubiquity iso-scan/filename=/iso/elementaryos-5.0-stable.20181016.iso quiet splash ---
+		initrd	(loop0)/casper/initrd.lz
+        }
+
+        menuentry "Check disc for defects" {
+		linux	(loop0)/casper/vmlinuz  boot=casper integrity-check iso-scan/filename=/iso/elementaryos-5.0-stable.20181016.iso quiet splash ---
+		initrd	(loop0)/casper/initrd.lz
+        }
+
+        menuentry "Test memory" {
+		linux16	(loop0)/install/mt86plus
+        }
+
+}
+
